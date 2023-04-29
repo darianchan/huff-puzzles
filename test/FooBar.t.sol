@@ -20,6 +20,8 @@ contract FooBarTest is Test, NonMatchingSelectorHelper {
     }
 
     function testFooBar() public {
+        console.log(fooBar.foo());
+        console.log(fooBar.bar());
         assertEq(fooBar.foo(), 2, "Foo expected to return 2");
         assertEq(fooBar.bar(), 3, "Bar expected to return 3");
     }

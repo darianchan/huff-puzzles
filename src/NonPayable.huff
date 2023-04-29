@@ -9,5 +9,10 @@
  */
 
 #define macro MAIN() = takes(0) returns(0) {
+    // check if there is a callvalue
+    callvalue iszero good jumpi     // iszero will be 1 if callvalue is 0 => that means we will jump to the good destination
+    revert
 
+    good:
+        stop // just stop execution if callvalue is 0
 }

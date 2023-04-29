@@ -13,5 +13,25 @@
 
 
 #define macro MAIN() = takes(0) returns(0) {
+    0x00 calldataload 0xE0 shr      // load function selector
+    __FUNC_SIG(add1) eq add1 jumpi  // jump to add1 function if function selector equals add1
 
+    revert // revert if no function selector matches
+
+    // jump location
+    add1:
+        ADD_ONE()
+}
+
+#define macro ADD_ONE() = takes(0) returns(0) {
+    0x04 calldataload   // load first 32 bytes onto the stack - skip 4 bytes for function selector
+    0x01                // push 1 onto the stack
+    add
+
+    0x00                // push memory location onto stack to store
+    mstore
+
+    0x20                
+    0x00
+    return              // return the added value that is stored in memory
 }

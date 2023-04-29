@@ -13,5 +13,35 @@
 
 
 #define macro MAIN() = takes(0) returns(0) {
+    0x00 calldataload 0xE0 shr                  // load function selector
+    __FUNC_SIG(multiply) eq multiply jumpi      // if the function selectors equal, jump to multiply destination
 
+    revert  // revert if no matching function selector
+
+    multiply:
+        MULTIPLY()
+
+}
+
+#define macro MULTIPLY() = takes(0) returns(0) {
+    // get the 2 arguments from the calldata
+    0x04 calldataload   // load first agrument
+    0x24 calldataload   // load second argument
+    mul
+
+    0x00
+    mstore              // store multiplication result in memory
+
+    // how to check for overflow - (if result / a != b) => overflow
+    0x04 calldataload   // [a]
+    0x00                // [0, a]
+    mload               // [result, a]
+    div                 // [result / a]
+    0x24 calldataload   // [b, result/a]
+    eq                  // [1]
+    jumpi
+
+    0x20
+    0x00
+    return              // return result
 }

@@ -8,5 +8,17 @@
  */
 
 #define macro MAIN() = takes(0) returns(0) {
-   
+    // get address of msg.sender
+    // get balance of msg.sender - BALANCE opcode takes in an address
+    caller     // [msg.sender]
+    balance    // [balance]
+
+    // store balance of msg.sender into memory
+    0x00        // [0, balance]
+    mstore      // []
+
+    // return the balance
+    0x20        // [32]
+    0x00        // [0, 32]
+    return
 }
