@@ -15,7 +15,7 @@
 #define macro MAIN() = takes(0) returns(0) {
     // store the string 'Only Huff' into memory
     // 4f6e6c792048756666 -> this is the encoded string for 'Only Huff'
-    // 9 bytes 0000000000000000000000000000000000000000000000
+    // 9 bytes
 
     // store dynamic offset of 0x20 at 0x00
     0x20

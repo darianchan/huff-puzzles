@@ -9,5 +9,21 @@
 
 
  #define macro MAIN() = takes(0) returns(0) {
-    
+     // get the size of the calldata and copy it into memory
+     calldatasize 0x00 0x00     // [0, 0, size]
+     calldatacopy               // will copy all the calldata into memory location 0x00
+
+    // retreive the value from memory and use sha3 on it
+    calldatasize
+    0x00
+    sha3
+
+    // store the keccak256 value into memory and return it
+    0x00
+    mstore
+
+    // return the keccak256 value that is stored in memory
+    0x20                
+    0x00
+    return
  }

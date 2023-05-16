@@ -13,5 +13,28 @@
 
 
  #define macro MAIN() = takes(0) returns(0) {
+    0x00 calldataload 0xE0 shr                      // load function selector
+    __FUNC_SIG(makeContract) eq makeContract jumpi  // jump to makeContract function if function selector equals makeContract
+
+    revert
     
+    makeContract:
+        MAKE_CONTRACT()
+ }
+
+ #define macro MAKE_CONTRACT() = takes(0) returns(0) {
+    // create bytecode that returns `0xcaffe`
+    // store that bytecode in memory
+    600c8060093d393df3620caffe60005260206000f3 0x00 mstore
+    
+    // use CREATE, passing in the bytecode to deploy the contract
+    // size of code is 42 in length (21 bytes) => 0x15
+    0x15 0x00 0x00 create
+
+    0x00
+    mstore
+
+    0x20
+    0x00
+    return
  }

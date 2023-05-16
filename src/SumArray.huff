@@ -12,5 +12,23 @@
 
 
 #define macro MAIN() = takes(0) returns(0) {
+    0x00 calldataload 0xE0 shr              // load function selector
+    __FUNC_SIG(sumArray) eq sumArray jumpi  // jump to sumArray function if function selector equals sumArray
+
+    // jump location
+    sumArray:
+        SUM_ARRAY()
+}
+
+#define macro SUM_ARRAY() = takes(0) returns(0) {
+    // load calldata and break it into 32 byte sections
+    // how do I get the length (# of elements) in the input array?
+        // use CALLDATASIZE opcode?
+        // CALLDATACOPY
+
+    // get size of calldata
+    // copy all the calldata starting after offset 0x04 (skip function selector)
+    // get 32 byte segements of data
+    // add the current number to memory location 0x00 (this slot will be used to keep track of your sum)
 
 }

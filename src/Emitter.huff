@@ -13,5 +13,23 @@
 
 
  #define macro MAIN() = takes(0) returns(0) {
-    
+     // get function selector
+     0x00 calldataload 0xE0 shr
+     __FUNC_SIG(value) eq emitValue jumpi
+
+     revert
+
+     emitValue:
+        EMIT_VALUE()    
+ }
+
+ #define macro EMIT_VALUE() = takes(0) returns(0) {
+     // get the 2 arguments from calldata
+    0x24 calldataload       // [secondArg] load second argument and store in memory to be used as parameter since it is not indexed 
+    0x00 mstore             // [0x00, secondArg] store the second argument in memory
+
+    0x04 calldataload      // [firstArg] load first agrument
+    __EVENT_HASH(Value)    // [event_sig, firstArg] get event hash of event signature to be used as first topic (topic[0])
+
+     0x00 0x20 log2        // log Value event with first agurment as indexed topic and second argument that we loaded from memory
  }

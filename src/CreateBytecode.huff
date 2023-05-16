@@ -1,0 +1,14 @@
+// use this file to compile the bytecode for the Create.huff challenge
+
+ #define macro MAIN() = takes(0) returns(0) {
+     // store '0xcaffe' in memory and return it
+     0x00000000000000000000000000000000000000000000000000000000000caffe
+     0x00
+     mstore
+
+     0x20
+     0x00
+     return
+ }
+
+ // 600c8060093d393df3620caffe60005260206000f3 - this is the bytecode that this file compiles down to

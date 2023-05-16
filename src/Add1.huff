@@ -9,6 +9,7 @@
  *  NOTICE: The contract should revert when an unrecognized function is called
  */
 
+#include "./Console.huff"
 #define function add1(uint256) payable returns(uint256)
 
 
