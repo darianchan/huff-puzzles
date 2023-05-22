@@ -47,7 +47,5 @@
     0x20
     0x00
     return          // return the value stored in memory
-    
-
 }
 

@@ -15,7 +15,7 @@
     mstore          // []
 
     // return length of calldata
-    0x20            // [32]
+    0x20            // [32] (TODO: why do we return size 0x20 instead of calldatasize)
     0x00            // [0, 32]
     return
 }

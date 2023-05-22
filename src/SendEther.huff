@@ -12,5 +12,25 @@
 
 
  #define macro MAIN() = takes(0) returns(0) {
+    0x00 calldataload 0xE0 shr      // load function selector
+    __FUNC_SIG(sendEther) eq sendEtherDestination jumpi
     
+    // revert if function selector does not matches
+    revert
+
+    // logic to send ether to target address
+    sendEtherDestination:
+        SEND_ETHER()
+ }
+
+ #define macro SEND_ETHER() = takes(0) returns(0) {
+     0x04 calldataload      // [address] load first argument - target address
+     0x00 0x00 0x00         // [0, 0, 0, address] inputs for argsOffset, argsSize, retOffset (we will have to do a swap later to get it in the right order)
+     callvalue              // [msg.value, 0, 0, 0, address] load call value
+     0x00                   // [0, msg.value, 0, 0, 0, address] input value for retsize, which we will swap to get address in correct place
+     swap5                  // [address, msg.value, 0, 0, 0, 0]
+     gas                    // [gas, address, msg.value, 0, 0, 0, 0] get remaning amount of gas left available
+
+     // send ether to argument address [gas, address, value, argsOffset, argsSize, retOffset, retsize]
+     call
  }
